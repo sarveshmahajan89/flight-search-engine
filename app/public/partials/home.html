@@ -1,0 +1,127 @@
+<div class="bs-example">
+	<div class="row">
+		<span class="home-title"><h1>Flight Search Engine</h1></span>
+	</div>
+	<div class="workarea">
+		<div class="sidebar">
+			<div class="switch-title">
+				<div class="row" ng-click="switch()">
+					<div ng-class="oneway ? 'active-switch' : 'inactive-switch'"><span>One way</span></div>
+					<div ng-class="oneway ? 'inactive-switch' : 'active-switch'"><span>Return</span></div>
+				</div>
+			</div>
+			
+			<div class="row heading-title">
+				<div class="col-side" id="city-label">
+					<input ng-class="invalidOrigin ? 'textbox-error input-icon' : 'textbox input-icon'" type="text" ng-model="origin" placeholder="Enter origin city" ng-focus="showPopupListOrigin()" ng-change="validateOriginCity()">
+					
+					<div class="input-popup" ng-repeat="city in cityList | filter:origin" ng-show="showPopupOrigin" ng-click="setSelectedModelOrigin(city)">
+						<div class="input-list" ><i class="fa fa-plane fa-lg"></i>&nbsp;&nbsp;  {{city}}</div>
+					</div>
+
+					<div class="error-noti" ng-show="invalidOrigin">Error: Please Enter source city</div>
+				</div>
+
+				
+
+				<div class="col-side" id="city-label">
+					<input ng-class="invalidDest ? 'textbox-error input-icon' : 'textbox input-icon'" type="text" ng-model="destination" placeholder="Enter destination city" ng-focus="showPopupListDest()" ng-change="validateDestCity()">
+
+					<div class="input-popup" ng-repeat="city in cityList | filter:destination" ng-show="showPopupDest" ng-click="setSelectedModelDest(city)">
+						<div class="input-list" ><i class="fa fa-plane fa-lg"></i>&nbsp;&nbsp;  {{city}}</div>
+					</div>
+					<div class="error-noti" ng-show="invalidDest">{{errorMessage}}</div>
+				</div>
+					
+
+				<div class="col-side" id="calender-label">
+					<input ng-class="invalidDepDate ? 'textbox-error input-icon' : 'textbox input-icon'" type="text" ng-model="departDate" placeholder="Departure Date" my-picker ng-change="validateDepartDate()">
+
+					<div class="error-noti" ng-show="invalidDepDate">Error: Please Enter daparture date</div>
+				</div>
+				<div class="col-side" id="calender-label">
+					<input ng-class="invalidReturnDate ? 'textbox-error input-icon' : 'textbox input-icon'" type="text" ng-model="returnDate" placeholder="Return Date" my-picker ng-disabled='oneway' ng-change="validateReturnDate()">
+
+					<div class="error-noti" ng-show="invalidReturnDate">{{dateErrorMessage}}</div>
+				</div>
+				<div class="col-side">
+					<fieldset ng-class="invalidPassSelect ? 'select-error' : 'form-group'">
+                        <select class="form-control" id="persons" ng-model="personno" ng-change="validatePassSelect()">
+                          <option value="Passengers">Passengers</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                        </select>
+                    </fieldset>
+                    <div class="error-noti" ng-show="invalidPassSelect">Error: Please select passenger</div>
+	            </div>
+	            <div class="col-side"><input class="submit" type="button" ng-click="submitForm()" value="Submit"></div>
+			</div>
+
+			<div class="row slider">
+				<div class="col"><span>Refine flight search</span></div>
+				<div class="slider-size" ui-slider min="0" max="20000" ng-model="sliderVal" ng-change="updateRange()"></div>
+                <div>
+                	<div class="slider-label"><label>0</label></div>
+                	<div class="slider-label slider-label-middle"><label>10000</label></div>
+                	<div class="slider-label slider-label-last"><label>20000</label></div>
+                </div>
+			</div>
+
+		</div>
+		<div class="container wa-back-image" ng-if="!showCityList">
+
+		</div>
+
+		<div class="container" ng-if="showCityList">
+			<div class="row heading-title">
+				<div class="col city-title" >
+					<span class="city-padd">{{origin}}</span>
+					<span class="city-padd">></span>
+					<span class="city-padd">{{destination}}</span>
+					<span class="city-padd" ng-show="!oneway">></span>
+					<span class="city-padd" ng-show="!oneway">{{origin}}</span>
+				</div>
+			</div>
+
+			<div class="row heading-title error-noti-flight" ng-show="showFlightNotification">
+				<div><span>No result found for selected date, please change the date !!</span></div>
+			</div>
+
+			<div class="row flight-desc-area" ng-repeat="item in filteredVal | rangeFilter: {max : sliderVal, oneWayFlight: oneway}">
+				<div class="flight-detail-block">
+					<div class="flight-inner-block">
+						<div class="set-margin">
+							<span ng-if="oneway" class="font-larger">Rs. {{item.fareOriginal}}</span>
+							<span ng-if="!oneway" class="font-larger">Rs. {{item.fare}}</span>
+						</div>
+						<div class="flight-table">
+							<div class="inner-left">
+								<div class="set-margin"><span class="font-medium">{{item.flightcode}}</span></div>
+								<div class="set-margin"><span class="font-medium">{{item.to}} > {{item.from}}</span></div>
+								<div class="set-margin"><span class="font-medium">Depart: {{item.depart}}</span></div>
+								<div class="set-margin"><span class="font-medium">Arrive: {{item.arrival}}</span></div>
+							</div>
+							<div class="inner-right" ng-repeat="returnItem in item.returnData">
+								<div class="set-margin"><span class="font-medium">{{returnItem.flightcode}}</span></div>
+								<div class="set-margin"><span class="font-medium">{{returnItem.to}} > {{returnItem.from}}</span></div>
+								<div class="set-margin"><span class="font-medium">Depart: {{returnItem.depart}}</span></div>
+								<div class="set-margin"><span class="font-medium">Arrive: {{returnItem.arrival}}</span></div>
+							</div>
+						</div>
+					</div>
+					<div class="flight-image-block">
+						<img src="images/flight.png"/>
+						<div class="col"><input class="submit" type="button" ng-click="submitForm()" value="Submit"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row error-noti-flight hide-when-zero" ng-hide="item.fare">
+				<div><span class="error-label">No result found for selected filter</span></div>
+			</div>
+		</div>
+	</div>
+</div>

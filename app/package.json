@@ -1,0 +1,24 @@
+{
+  "name": "thoughtworks",
+  "version": "1.0.0",
+  "description": "flight booking",
+  "main": "index.html",
+  "scripts": {
+    "test": "npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://sarveshmahajan89@bitbucket.org/sarveshmahajan89/sample-code.git"
+  },
+  "keywords": [
+    "nodejs",
+    "integration"
+  ],
+  "author": "sarvesh",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/sarveshmahajan89/sample-code#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4"
+  }
+}

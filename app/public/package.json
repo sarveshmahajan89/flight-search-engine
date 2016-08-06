@@ -1,0 +1,26 @@
+{
+  "name": "thoughtworks",
+  "version": "1.0.0",
+  "description": "FlightApp booking",
+  "main": "index.html",
+  "scripts": {
+    "test": "npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://sarveshmahajan89@bitbucket.org/sarveshmahajan89/sample-code.git"
+  },
+  "keywords": [
+    "nodejs",
+    "integration"
+  ],
+  "author": "sarvesh",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/sarveshmahajan89/sample-code#readme",
+  "dependencies": {
+    "angular":          "1.4.8",
+    "angular-route":    "1.3.0",
+    "jquery":           "^1.10.2",
+    "jquery-ui": "^1.10.2"
+  }
+}
