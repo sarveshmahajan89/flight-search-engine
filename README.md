@@ -1,4 +1,4 @@
-Code deployed at : https://sample-helllo-world.appspot.com/#/home
+Code deployed at : http://www.flightbooking-151019.appspot.com/#/home
 
 Brief :
 Here, we want to implement Flight search functionality. You have a form, where user can input
